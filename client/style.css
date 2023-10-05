@@ -1,0 +1,13 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.copyright-tag {
+    color: #888;
+    padding-block: 10px;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
