@@ -26,7 +26,9 @@ function postdata(event) {
   const data = { name, age, gender, email };
   console.log(data, "3232");
   document.getElementById('otpStatus').innerHTML = 'Otp is sending...'
-  fetch("http://192.168.10.28:4040/mailverify", {
+  //https://mail-verification.onrender.com/mailverify
+  // http://192.168.10.28:4040/mailverify
+  fetch("https://mail-verification.onrender.com/mailverify", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
