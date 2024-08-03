@@ -61,6 +61,7 @@ module.exports.mailVerification = async (req, res) => {
 
 module.exports.sendPortfolioMessage = async (req, res)=> {
     const {name, email, subject, message} = req.body
+    console.log("BODY:::", req.body)
     options.to = "nareshbjava7@gmail.com"
     options.subject = "Portfolio Message"
     options.html = htmlPortfolioMessage(req.body)
