@@ -13,18 +13,42 @@ const options = {
     subject: 'Test Email Verification',
     html: ''
 }
+function convertToGMT(dateString, timeZone) {
+  const date = new Date(dateString);
+
+  // Format the date according to the specified time zone
+  const options = {
+    timeZone: timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  };
+
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  return formatter.format(date);
+}
 const htmlContent = (name, random) => {
-    const d = new Date().toLocaleString()
+    const isoString = new Date().toISOString(); // ISO date string
+    const timeZone = 'Asia/Kolkata'; // GMT+5:30
+    const formattedDate = convertToGMT(isoString, timeZone);
     const val = `<div>
         <h3>Name: <em> ${name}</em></h3>
         <h3>OTP: <em> ${random}</em></h3>
-        <h3>Sent Time: <em> ${d} </em></h3>
+        <h3>Sent Time: <em> ${formattedDate} </em></h3>
     </div>`
     return val
 }
 
+
+
 const htmlPortfolioMessage =({name, email, subject, message}) => {
-    const d = new Date().toLocaleString()
+    const isoString = new Date().toISOString(); // ISO date string
+    const timeZone = 'Asia/Kolkata'; // GMT+5:30
+    const formattedDate = convertToGMT(isoString, timeZone);
     const val =  `<div>
         <h3>Name: <em> ${name}</em></h3>
         <h3>Email: <em> ${email}</em></h3>
@@ -34,7 +58,7 @@ const htmlPortfolioMessage =({name, email, subject, message}) => {
         <br>
         <br>
         <br>
-        <h6>Sent at : ${d}</h6>
+        <h6>Sent at : ${formattedDate}</h6>
     </div>`
     return val
 }
