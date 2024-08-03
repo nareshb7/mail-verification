@@ -23,6 +23,22 @@ const htmlContent = (name, random) => {
     return val
 }
 
+const htmlPortfolioMessage =({name, email, subject, message}) => {
+    const d = new Date().toLocaleString()
+    const val =  `<div>
+        <h3>Name: <em> ${name}</em></h3>
+        <h3>Email: <em> ${email}</em></h3>
+        <h3>Subject: <em> ${subject} </em></h3>
+        <h4>Message:</h4>
+        <p>${message}</p>
+        <br>
+        <br>
+        <br>
+        <h6>Sent at : ${d}</h6>
+    </div>`
+    return val
+}
+
 module.exports.mailVerification = async (req, res) => {
     console.log('BODY::', req.body)
     const { email, content, name, age , gender} = req.body
@@ -41,4 +57,24 @@ module.exports.mailVerification = async (req, res) => {
             res.status(400).json({error: e.message})
         }
     })
+}
+
+module.exports.sendPortfolioMessage = async (req, res)=> {
+    const {name, email, subject, message} = req.body
+    options.to = "nareshbjava7@gmail.com"
+    options.subject = "Portfolio Message"
+    options.html = htmlPortfolioMessage(req.body)
+    transporter.sendMail(options, (err, info) => {
+        try {
+
+            if (err) {
+                res.status(401).json(err)
+            }
+            console.log('RESP:', err, info)
+            res.json({message: "Mail Sent Successfully"})
+        } catch (e) {
+            res.status(400).json({error: e.message})
+        }
+    })
+    
 }
