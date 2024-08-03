@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const http = require('http')
 const cors = require('cors')
-const { mailVerification } = require('./auth/mailVerfication')
+const { mailVerification, sendPortfolioMessage } = require('./auth/mailVerfication')
 
 const corsOptions = {
     origin: '*',
@@ -17,6 +17,10 @@ const PORT = process.env.PORT || 4040
 // app.use('/', (req,res) => {
 //     res.send(`mail-verification is running on ${PORT}`)
 // })
+app.get('/', (req, res)=> {
+    res.json({message: "Welcome to mail verfication"})
+})
+app.post('/send-message', sendPortfolioMessage)
 app.post('/mailverify',mailVerification)
 server.listen(PORT , ()=> {
     console.log('server is running on ', PORT)
