@@ -63,6 +63,23 @@ const htmlPortfolioMessage =({name, email, subject, message}) => {
     return val
 }
 
+const userPortfolioMessage =({name}) => {
+    const isoString = new Date().toISOString(); // ISO date string
+    const timeZone = 'Asia/Kolkata'; // GMT+5:30
+    const formattedDate = convertToGMT(isoString, timeZone);
+    const val =  `<div>
+        <h3>Hi <em> ${name},</em></h3>
+        <p> We will go through your message and get back to you..! </p>
+        <br>
+        <br>
+        <br>
+        <h6>Best Regards,</h6>
+        <h5>Naresh Baleboina</h5>
+        <h6>Sent at : ${formattedDate}</h6>
+    </div>`
+    return val
+}
+
 module.exports.mailVerification = async (req, res) => {
     console.log('BODY::', req.body)
     const { email, content, name, age , gender} = req.body
@@ -89,6 +106,24 @@ module.exports.sendPortfolioMessage = async (req, res)=> {
     options.to = "nareshbjava7@gmail.com"
     options.subject = "Portfolio Message"
     options.html = htmlPortfolioMessage(req.body)
+    const userPerson = {
+        ...options,
+        to : email,
+        subject: "From Naresh Baleboina",
+        html: userPortfolioMessage({name})
+    }
+    transporter.sendMail(userPerson, (err, info) => {
+        try {
+
+            if (err) {
+                res.status(401).json(err)
+            }
+            console.log('RESP:', err, info)
+            //res.json({message: "Mail Sent Successfully"})
+        } catch (e) {
+            //res.status(400).json({error: e.message})
+        }
+    })
     transporter.sendMail(options, (err, info) => {
         try {
 
@@ -101,5 +136,6 @@ module.exports.sendPortfolioMessage = async (req, res)=> {
             res.status(400).json({error: e.message})
         }
     })
+    
     
 }
