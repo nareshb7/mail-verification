@@ -74,8 +74,8 @@ const userPortfolioMessage =({name}) => {
         <br>
         <br>
         <h6>Best Regards,</h6>
-        <h5>Naresh Baleboina</h5>
-        <h6>Sent at : ${formattedDate}</h6>
+        <h5 style="margin: 0;">Naresh Baleboina,</h5>
+        <h6 style="margin: 0;">Sent at : ${formattedDate}</h6>
     </div>`
     return val
 }
